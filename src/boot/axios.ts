@@ -14,9 +14,16 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' });
+const api = axios.create({ baseURL: 'https://api.giphy.com/v1/gifs' });
 
 export default boot(({ app }) => {
+  
+  api.interceptors.request.use(config => {
+    config.params = config.params || {};
+    config.params['api_key'] = '8xThmrnVE4ShBY3hjGWfEB2qbkcEOpzp';
+    return config;
+  });
+
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios;

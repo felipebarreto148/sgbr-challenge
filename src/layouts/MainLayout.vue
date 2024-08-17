@@ -2,10 +2,10 @@
   <q-layout view="hHh LpR lFr">
 
     <q-header elevated class="bg-primary text-white">
-      <q-toolbar class="flex justify-between items-center">
+      <q-toolbar class="flex justify-between items-center q-py-sm">
           <img class="app-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png">
 
-        <section class="flex items-center screen-xs">
+        <section class="flex items-center">
           <span class="text-h6 text-weight-bold q-px-md">Felipe Barreto</span>
           <q-avatar class="q-pa-none" icon="person" font-size="100%" color="white" text-color="black" />
         </section>
