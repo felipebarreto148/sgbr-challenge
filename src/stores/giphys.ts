@@ -1,5 +1,6 @@
 // Core
 import { defineStore } from 'pinia';
+import { LocalStorage } from 'quasar'
 // Services
 import { api } from 'boot/axios';
 // Types
@@ -97,14 +98,14 @@ export const useGiphysStore = defineStore('giphys', {
       this.favorites = giphys;
     },
     async saveFavoriteGiphys() {
-      localStorage.setItem('favorites', JSON.stringify(this.favorites));
+      LocalStorage.set('favorites', JSON.stringify(this.favorites));
     },
     getFavorites(): IGiphyObject[] {
-      const storedFavorites = localStorage.getItem('favorites');
+      const storedFavorites = LocalStorage.getItem('favorites');
     
       if (storedFavorites) {
         try {
-          const parsedFavorites: IGiphyObject[] = JSON.parse(storedFavorites);
+          const parsedFavorites: IGiphyObject[] = JSON.parse(storedFavorites.toString());
           if (Array.isArray(parsedFavorites)) {
             return parsedFavorites;
           } else {
