@@ -1,8 +1,9 @@
 <template>
-  <q-card class="giphy-card">
-    <q-checkbox 
+  <q-card class="giphy-card" :clickable="clickable">
+    <q-checkbox
+      v-if="favoritable"
       size="md" 
-      v-model="saved" 
+      v-model="saved"
       :val="giphy"
       checked-icon="favorite"
       unchecked-icon="favorite_border"
@@ -10,7 +11,7 @@
       class="favorite-button absolute-top-right q-ma-xs"
       @update:model-value="handleChange"
     />
-    <q-img class="giphy-image" :src="giphy.image">
+    <q-img class="giphy-image" :src="giphy.image" loading="lazy">
       <div class="absolute-bottom text-h6 title">
         {{ giphy.title }}
       </div>
@@ -20,7 +21,7 @@
 
 <script setup>
 // Core
-import { ref, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 // Stores
 import { useGiphysStore } from 'src/stores/giphys';
 import { storeToRefs } from 'pinia';
@@ -32,39 +33,59 @@ const props = defineProps({
   giphy: {
     type: Object,
     required: true
-  }
+  },
+  favoritable: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  clickable: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  favorited: {
+    type: Boolean,
+    required: false
+  },
 })
 
 const saved = ref(false);
 
 function isSaved() {
-  saved.value = favorites.value.some((item) => item.id === props.giphy.id);
+  const index = favorites.value.map(item => item.id).indexOf(props.giphy.id);
+  saved.value = props.favorited || index !== -1;
 }
 
 function handleChange() {
   if (saved.value) {
     favorites.value.push(props.giphy);
   } else {
-    favorites.value = favorites.value.filter(fav => fav.id !== props.giphy.id);
+    const index = favorites.value.map(item => item.id).indexOf(props.giphy.id);
+    favorites.value.splice(index, 1);
   }
   giphyStore.saveFavoriteGiphys();
 };
 
-onMounted(() => {
-  isSaved();
-})
+
+watch(
+  () => favorites,
+  () => { isSaved() },
+  { deep: true, immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>
 .giphy-card {
-  width: fit-content;
-  height: fit-content;
-  min-width: 300px;
-  max-width: 400px;
+  width: 100%;
+  margin-bottom: 1rem;
 
-  .giphy-image {
-    width: 100%;
-    object-fit: contain;
+  &[clickable="true"] {
+    cursor: pointer;
+  }
+
+  &:hover {
+    transform: scale(1.04);
   }
 
   .title {

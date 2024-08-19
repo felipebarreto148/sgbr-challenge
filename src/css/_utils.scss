@@ -1,11 +1,4 @@
 .custom-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-  align-items: flex-start;
-
-  .custom-card {
-    flex: 0 1 auto;
-  }
+  columns: 300px 4;
+  column-gap: 15px;
 }

@@ -1,10 +1,15 @@
 <template>
-  <main class="custom-content">
+  <main class="custom-content" v-if="!!favorites.length">
     <GiphyCard
+      favoritable
+      favorited
       v-for="(item, index) in favorites"
       :key="index"
       :giphy="item"
     />
+  </main>
+  <main v-else class="flex justify-center">
+    <h1 class="title">Você não possui favoritos.</h1>
   </main>
 </template>
 
@@ -23,31 +28,13 @@ import { storeToRefs } from 'pinia';
 const giphyStore = useGiphysStore();
 const { favorites } = storeToRefs(giphyStore);
 
-onMounted(() => {
-  giphyStore.fetchFavoriteGiphys();
+onMounted(async () => {
+  await giphyStore.fetchFavoriteGiphys();
 })
 </script>
 
 <style lang="scss" scoped>
-.giphy-card {
-  width: fit-content;
-  height: fit-content;
-  min-width: 300px;
-  max-width: 400px;
-
-  .giphy-image {
-    width: 100%;
-    object-fit: contain;
-  }
-
-  .title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .favorite-button {
-    z-index: 999;
-  }
+.title {
+  font: 500 22px "Poppins", sans-serif;
 }
 </style>

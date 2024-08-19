@@ -9,6 +9,7 @@
   </q-input>
   <q-infinite-scroll @load="handleGiphys" class="custom-content">
     <GiphyCard
+      favoritable
       v-for="(item, index) in getGiphys"
       :key="index"
       :giphy="item"
