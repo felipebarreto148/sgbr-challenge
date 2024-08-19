@@ -19,13 +19,20 @@ export const useGiphysStore = defineStore('giphys', {
     favorites: [],
     categories: {
       data: [],
+      selected: null,
       loading: false
     },
   }),
   getters: {
     getGiphys: (state) => state.giphys.data,
     getFavoriteGiphys: (state) => state.favorites,
-    getCategoriesGiphys: (state) => state.categories.data,
+    getCategoriesGiphys: (state) => state.categories.data.map((item: ICategory) => ({
+      ...item,
+      id: item.gif.id,
+      title: item.name,
+      image: item.gif.images.downsized.url,
+    })),
+    selectedCategory: (state) => state.categories.selected
   },
   actions: {
     async fetchSearchableGiphys(search: string | null = null) {
@@ -82,11 +89,7 @@ export const useGiphysStore = defineStore('giphys', {
       this.categories.loading = true;
       await api.get('/categories')
       .then((res) => {
-        this.categories.data = res.data.data.map((item: ICategory) => ({
-          id: item.gif.id,
-          title: item.name,
-          image: item.gif.images.downsized.url,
-        }));
+        this.categories.data = res.data.data as ICategory[];
       })
       .catch(() => {})
       .finally(() => {
@@ -125,6 +128,9 @@ export const useGiphysStore = defineStore('giphys', {
         total: 0,
         loading: false
       }
+    },
+    setSelectedCategory(category: ICategory | null = null) {
+      this.categories.selected = category;
     }
   },
 });

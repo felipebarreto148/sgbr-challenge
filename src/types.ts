@@ -98,17 +98,18 @@ export interface ICategory {
 }
 
 export interface GiphyState {
-  searcher: string | null,
+  searcher: string | null;
   giphys: {
-    data: IGiphyObject[],
-    offset: number,
-    limit: number,
-    total: number,
+    data: IGiphyObject[];
+    offset: number;
+    limit: number;
+    total: number;
     loading: boolean
-  },
-  favorites: IGiphyObject[],
+  };
+  favorites: IGiphyObject[];
   categories: {
-    data: [],
-    loading: boolean
-  },
+    data: ICategory[];
+    selected: ICategory | null;
+    loading: boolean;
+  };
 }

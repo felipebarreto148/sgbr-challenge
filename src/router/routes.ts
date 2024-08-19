@@ -16,7 +16,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/Favorites.vue')
       },
       {
-        path: 'categorias',
+        path: 'categorias/:name?',
         name: 'Categories',
         component: () => import('pages/Categories.vue')
       },
