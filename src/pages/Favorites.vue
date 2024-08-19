@@ -1,5 +1,5 @@
 <template>
-  <main class="row justify-center q-gutter-md">
+  <main class="custom-content">
     <GiphyCard
       v-for="(item, index) in favorites"
       :key="index"

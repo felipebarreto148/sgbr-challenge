@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 // Services
 import { api } from 'boot/axios';
 // Types
-import { GiphyState, IGiphy, IGiphyObject } from 'src/types';
+import { GiphyState, IGiphy, IGiphyObject, ICategory } from 'src/types';
 
 export const useGiphysStore = defineStore('giphys', {
   state: (): GiphyState => ({
@@ -81,7 +81,11 @@ export const useGiphysStore = defineStore('giphys', {
       this.categories.loading = true;
       await api.get('/categories')
       .then((res) => {
-        this.categories.data = res.data.data;
+        this.categories.data = res.data.data.map((item: ICategory) => ({
+          id: item.gif.id,
+          title: item.name,
+          image: item.gif.images.downsized.url,
+        }));
       })
       .catch(() => {})
       .finally(() => {

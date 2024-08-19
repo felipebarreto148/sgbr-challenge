@@ -7,7 +7,7 @@
       <q-icon name="close" @click="clearSearch" class="cursor-pointer" />
     </template>
   </q-input>
-  <q-infinite-scroll @load="handleGiphys"  class="row justify-center q-gutter-md">
+  <q-infinite-scroll @load="handleGiphys" class="custom-content">
     <GiphyCard
       v-for="(item, index) in getGiphys"
       :key="index"

@@ -91,6 +91,12 @@ export interface IGiphyObject {
   image: string;
 }
 
+export interface ICategory {
+  gif: IGiphy;
+  name: string;
+  name_encoded: string;
+}
+
 export interface GiphyState {
   searcher: string | null,
   giphys: {
