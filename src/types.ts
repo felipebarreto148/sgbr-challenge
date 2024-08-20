@@ -109,6 +109,10 @@ export interface GiphyState {
   favorites: IGiphyObject[];
   categories: {
     data: ICategory[];
+    giphys: IGiphyObject[];
+    offset: number;
+    limit: number;
+    total: number;
     selected: ICategory | null;
     loading: boolean;
   };

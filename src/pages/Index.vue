@@ -48,7 +48,7 @@ async function clearSearch() {
   await giphyStore.fetchGiphys();
 }
 
-async function handleGiphys(index: number, done: () => void) {
+async function handleGiphys(index: number, done: () => void) {  
   if (!!searcher.value) {
     await giphyStore.fetchSearchableGiphys(searcher.value)
     .finally(() => {

@@ -19,6 +19,10 @@ export const useGiphysStore = defineStore('giphys', {
     favorites: [],
     categories: {
       data: [],
+      giphys: [],
+      offset: 0,
+      limit: 25,
+      total: 0,
       selected: null,
       loading: false
     },
@@ -26,12 +30,13 @@ export const useGiphysStore = defineStore('giphys', {
   getters: {
     getGiphys: (state) => state.giphys.data,
     getFavoriteGiphys: (state) => state.favorites,
-    getCategoriesGiphys: (state) => state.categories.data.map((item: ICategory) => ({
+    getCategories: (state) => state.categories.data.map((item: ICategory) => ({
       ...item,
       id: item.gif.id,
       title: item.name,
       image: item.gif.images.downsized.url,
     })),
+    getGiphysByCategory: (state) => state.categories.giphys,
     selectedCategory: (state) => state.categories.selected
   },
   actions: {
@@ -102,6 +107,32 @@ export const useGiphysStore = defineStore('giphys', {
     },
     async saveFavoriteGiphys() {
       LocalStorage.set('favorites', JSON.stringify(this.favorites));
+    },
+    async fetchGiphysByCategory(search: string | null = null) {
+      this.categories.loading = true;
+      const params = {
+        limit: this.categories.limit,
+        offset: this.categories.offset,
+        lang: 'pt',
+        q: search,
+      }
+      await api.get('/search', { params })
+      .then((res) => {
+        this.categories.giphys = [
+          ...this.categories.giphys,
+          ...res.data.data.map((item: IGiphy) => ({ 
+            id: item.id,
+            title: item.title,
+            image: item.images.downsized.url,
+          }))
+        ];
+        this.categories.offset += this.categories.limit;
+        this.categories.total = res.data.data.pagination.total_count;
+      })
+      .catch(() => {})
+      .finally(() => {
+        this.categories.loading = false;
+      })
     },
     getFavorites(): IGiphyObject[] {
       const storedFavorites = LocalStorage.getItem('favorites');
