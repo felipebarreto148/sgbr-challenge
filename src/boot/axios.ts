@@ -20,7 +20,7 @@ export default boot(({ app }) => {
   
   api.interceptors.request.use(config => {
     config.params = config.params || {};
-    config.params['api_key'] = '8xThmrnVE4ShBY3hjGWfEB2qbkcEOpzp';
+    config.params['api_key'] = process.env.GIPHY_API_KEY;
     return config;
   });
 
