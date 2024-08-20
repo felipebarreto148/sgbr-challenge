@@ -78,7 +78,7 @@ watch(
 <style lang="scss" scoped>
 .giphy-card {
   width: 100%;
-  margin-bottom: 1rem;
+  height: fit-content;
 
   &[clickable="true"] {
     cursor: pointer;

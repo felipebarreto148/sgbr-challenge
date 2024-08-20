@@ -1,4 +1,12 @@
 .custom-content {
-  columns: 300px 4;
-  column-gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+
+  .giphy-card {
+    margin-bottom: 20px;
+    max-width: 300px;
+  }
 }
