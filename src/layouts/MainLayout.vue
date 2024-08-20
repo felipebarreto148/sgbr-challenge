@@ -5,7 +5,7 @@
       <q-toolbar class="flex justify-between items-center q-py-sm">
         <section class="flex items-center q-gutter-md">
           <q-btn flat @click="sidebar = !sidebar" round dense icon="menu" />
-          <img class="app-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png">
+          <h1 class="layout-title">SGBR</h1>
         </section>
 
         <section class="flex items-center xs-hide">
@@ -74,7 +74,7 @@ const sidebar = ref(false);
 </script>
 
 <style scoped lang="scss">
-.app-logo {
-  max-width: 120px;
+.layout-title {
+  font: 700 30px "Poppins", sans-serif;
 }
 </style>
